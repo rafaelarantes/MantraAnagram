@@ -3,8 +3,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 from MantraAnagram import MantraAnagram
-from collections import OrderedDict
-from re import sub 
+from TextUtils import TextUtils
 
 
 class MantraAnagramTests(unittest.TestCase):
@@ -21,8 +20,10 @@ class MantraAnagramTests(unittest.TestCase):
         for p in phrases:
             phrase = mantra.generate(p)
 
-            self.assertEqual(len(list(phrase)), len(list("".join(OrderedDict.fromkeys(sub('[^a-z]+', '', p.lower().replace(" ", "")))))))
+            p = TextUtils.RemoveSpecialCharacters(p)
+            p = TextUtils.RemoveDuplicateCharacters(p)
 
+            self.assertEqual(len(list(phrase)), len(list(p)))
     def testWordsPortuguese(self):
         phrases = [
                     "Eu acho que isso é bom",
@@ -35,7 +36,10 @@ class MantraAnagramTests(unittest.TestCase):
         for p in phrases:
             phrase = mantra.generate(p)
 
-            self.assertEqual(len(list(phrase)), len(list("".join(OrderedDict.fromkeys(sub('[^a-z]+', '', p.lower().replace(" ", "")))))))
+            p = TextUtils.RemoveSpecialCharacters(p)
+            p = TextUtils.RemoveDuplicateCharacters(p)
+
+            self.assertEqual(len(list(phrase)), len(list(p)))
 
 
 if __name__ == '__main__':

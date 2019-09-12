@@ -1,8 +1,8 @@
-from collections import OrderedDict
 from random import shuffle
-from re import sub
+from TextUtils import TextUtils
 
 class MantraAnagram:
+
     def __getVowels(self, letters):
         return list(filter(lambda x : x in ['a', 'e', 'i', 'o', 'u'], letters))
 
@@ -40,9 +40,9 @@ class MantraAnagram:
         return letters
     
     def generate(self, phrase):
-        phrase = phrase.lower().replace(" ", "")
-        phrase = sub('[^a-z]+', '', phrase)
-        phrase = "".join(OrderedDict.fromkeys(phrase))
+        phrase = TextUtils.RemoveSpecialCharacters(phrase)
+        phrase = TextUtils.RemoveDuplicateCharacters(phrase)
+
         letters = list(phrase)
         shuffle(letters)
 
