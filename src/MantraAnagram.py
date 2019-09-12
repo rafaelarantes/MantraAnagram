@@ -1,5 +1,6 @@
 from collections import OrderedDict
 from random import shuffle
+from re import sub
 
 class MantraAnagram:
     def __getVowels(self, letters):
@@ -14,7 +15,11 @@ class MantraAnagram:
 
     def __getDigraphs(self, letters):
         digraphs = []
-        for digraph in ['ch', 'lh', 'nh', 'gu', 'qu', 'sc', 'sç', 'xc', 'xs']:
+        for digraph in ['ch', 'lh', 'nh', 'gu', 'qu', 'sc', 'sç', 'xc', 'xs',#
+                       'gh', 'th', 'sh', 'zh', 'rh', 'ph', 'wh', 'wr', 'ow',
+                       'ea', 'ou', 'au', 'ck', 'kn', 'dg', 'si', 'ti', 'pn',
+                       'ps', 'ng'
+                       ]:
             lettersDigraph = list(digraph)
             
             if lettersDigraph[0] in letters and lettersDigraph[1] in letters and len(list(filter(lambda x : lettersDigraph[0] not in list(x) or lettersDigraph[1] not in list(x), digraphs))) == 0:
@@ -36,6 +41,7 @@ class MantraAnagram:
     
     def generate(self, phrase):
         phrase = phrase.lower().replace(" ", "")
+        phrase = sub('[^a-z]+', '', phrase)
         phrase = "".join(OrderedDict.fromkeys(phrase))
         letters = list(phrase)
         shuffle(letters)
@@ -53,6 +59,7 @@ class MantraAnagram:
         letters = self.__removeLetters(vowels, letters)
         
         final_letters = []
+        vowelsNotYetFound = ['a', 'e', 'i', 'o', 'u']
 
         while(len(digraphs) > 0 or len(consonants) > 0):
             if len(digraphs) > 0:
@@ -64,9 +71,27 @@ class MantraAnagram:
                     vowels = self.__removeLetters([vowels[0]], vowels)
 
             elif len(consonants) > 0:
-                final_letters.append(consonants[0])
-                consonants = self.__removeLetters([consonants[0]], consonants)
+                if len(vowels) > 0:
+                    final_letters.append(consonants[0])
+                    consonants = self.__removeLetters([consonants[0]], consonants)
+                else:
+                    if len([i for i in vowelsNotYetFound if i in final_letters]) > 0:
+                        for v in range(0, len(vowelsNotYetFound)):
+                            if vowelsNotYetFound[v] in final_letters:
+                                if final_letters.index(vowelsNotYetFound[v]) < len(final_letters):
+                                    final_letters.insert(final_letters.index(vowelsNotYetFound[v])+1, consonants[0])
+                                    consonants = self.__removeLetters([consonants[0]], consonants)
+                                    vowelsNotYetFound.remove(vowelsNotYetFound[v])
+                                    break
+                                else:
+                                    final_letters.append(consonants[0])
+                                    consonants = self.__removeLetters([consonants[0]], consonants)
+                                    break
+                    else:
+                        final_letters.append(consonants[0])
+                        consonants = self.__removeLetters([consonants[0]], consonants)
 
+                    
                 if len(vowels) > 0:
                     final_letters.append(vowels[0])
                     vowels = self.__removeLetters([vowels[0]], vowels)
