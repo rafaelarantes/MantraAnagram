@@ -38,6 +38,26 @@ class MantraAnagram:
 
         return letters
     
+    def __getPhonemes(self, letters):
+        digraphs = self.__getDigraphs(letters)
+        self.__removeLetters(digraphs, letters)
+        
+        ending_consonants = self.__getEndingConsonants(letters)
+        letters = self.__removeLetters(ending_consonants, letters)
+        
+        consonants = self.__getConsonants(letters)
+        letters = self.__removeLetters(consonants, letters)
+        
+        vowels = self.__getVowels(letters)
+        letters = self.__removeLetters(vowels, letters)
+
+        return consonants, digraphs, ending_consonants, vowels
+
+    def __moveFirstLetterPhonemeForList(self, phonemes, letters):
+        letters.append(phonemes[0])
+        phonemes = self.__removeLetters([phonemes[0]], phonemes)
+        return phonemes
+
     def generate(self, phrase):
         phrase = TextUtils.RemoveSpecialCharacters(phrase)
         phrase = TextUtils.RemoveDuplicateCharacters(phrase)
@@ -45,17 +65,7 @@ class MantraAnagram:
         letters = list(phrase)
         shuffle(letters)
 
-        digraphs = self.__getDigraphs(letters)
-        self.__removeLetters(digraphs, letters)
-
-        ending_consonants = self.__getEndingConsonants(letters)
-        letters = self.__removeLetters(ending_consonants, letters)
-
-        consonants = self.__getConsonants(letters)
-        letters = self.__removeLetters(consonants, letters)
-
-        vowels = self.__getVowels(letters)
-        letters = self.__removeLetters(vowels, letters)
+        consonants, digraphs, ending_consonants, vowels = self.__getPhonemes(letters)
         
         final_letters = []
         vowelsNotYetFound = ['a', 'e', 'i', 'o', 'u']
@@ -63,17 +73,14 @@ class MantraAnagram:
 
         while(len(digraphs) > 0 or len(consonants) > 0):
             if len(digraphs) > 0 and not consonants_first:
-                final_letters.append(digraphs[0])
-                digraphs = self.__removeLetters([digraphs[0]], digraphs)
+                digraphs = self.__moveFirstLetterPhonemeForList(digraphs, final_letters)
 
                 if len(vowels) > 0:
-                    final_letters.append(vowels[0])
-                    vowels = self.__removeLetters([vowels[0]], vowels)
+                    vowels = self.__moveFirstLetterPhonemeForList(vowels, final_letters)
 
             elif len(consonants) > 0:
                 if len(vowels) > 0:
-                    final_letters.append(consonants[0])
-                    consonants = self.__removeLetters([consonants[0]], consonants)
+                    consonants = self.__moveFirstLetterPhonemeForList(consonants, final_letters)
                 else:
                     if len([i for i in vowelsNotYetFound if i in final_letters]) > 0:
                         for v in range(0, len(vowelsNotYetFound)):
@@ -84,17 +91,13 @@ class MantraAnagram:
                                     vowelsNotYetFound.remove(vowelsNotYetFound[v])
                                     break
                                 else:
-                                    final_letters.append(consonants[0])
-                                    consonants = self.__removeLetters([consonants[0]], consonants)
+                                    consonants = self.__moveFirstLetterPhonemeForList(consonants, final_letters)
                                     break
                     else:
-                        final_letters.append(consonants[0])
-                        consonants = self.__removeLetters([consonants[0]], consonants)
-
+                        consonants = self.__moveFirstLetterPhonemeForList(consonants, final_letters)
                     
                 if len(vowels) > 0:
-                    final_letters.append(vowels[0])
-                    vowels = self.__removeLetters([vowels[0]], vowels)
+                    vowels = self.__moveFirstLetterPhonemeForList(vowels, final_letters)
             
             consonants_first = False
 
@@ -117,8 +120,7 @@ class MantraAnagram:
                     final_letters.insert(0, vowels[0])
                     vowels = self.__removeLetters([vowels[0]], vowels)
                 else:
-                    final_letters.append(vowels[0])
-                    vowels = self.__removeLetters([vowels[0]], vowels)           
+                    vowels = self.__moveFirstLetterPhonemeForList(vowels, final_letters)
 
         return ''.join(final_letters)
 
