@@ -15,10 +15,9 @@ class MantraAnagram:
 
     def __getDigraphs(self, letters):
         digraphs = []
-        for digraph in ['ch', 'lh', 'nh', 'gu', 'qu', 'sc', 'sç', 'xc', 'xs',#
-                       'gh', 'th', 'sh', 'zh', 'rh', 'ph', 'wh', 'wr', 'ck',
-                       'kn', 'dg', 'pn', 'ps', 'ng',
-                       #'ea', 'ou', 'au', 'ow','si', 'ti',
+        for digraph in ['ch', 'lh', 'nh', 'gu', 'qu', 'sc', 'sç', 'xc', 'xs',
+                        'gh', 'th', 'sh', 'zh', 'rh', 'ph', 'wh', 'wr', 'ck',
+                        'kn', 'dg', 'pn', 'ps', 'ng',
                        ]:
             lettersDigraph = list(digraph)
             
