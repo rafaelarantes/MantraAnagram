@@ -70,9 +70,15 @@ class MantraAnagram:
     def __getFirstUnsedVowelInList(self, vowelsNotUsedYet, letters):
         for vowel in range(0, len(vowelsNotUsedYet)):
             if vowelsNotUsedYet[vowel] in letters and letters.index(vowelsNotUsedYet[vowel]) < len(letters):
-                return vowel
+                return vowelsNotUsedYet[vowel]
         
         return None
+    
+    def __lastElementOfListIsVowel(self, letters):
+        return letters[len(letters)-1] in ['a', 'e', 'i', 'o', 'u']
+    
+    def __valueOfListContainsInAnotherList(self, first_list, second_list):
+        return len([i for i in first_list if i in second_list]) > 0
 
     def generate(self, phrase):
         phrase = TextUtils.RemoveSpecialCharacters(phrase)
@@ -84,7 +90,7 @@ class MantraAnagram:
         consonants, digraphs, ending_consonants, vowels = self.__getPhonemes(letters)
         
         final_letters = []
-        vowelsNotYetFound = ['a', 'e', 'i', 'o', 'u']
+        vowelsNotUsedYet = ['a', 'e', 'i', 'o', 'u']
         consonants_first = True
 
         while(len(digraphs) > 0 or len(consonants) > 0):
@@ -96,11 +102,11 @@ class MantraAnagram:
                 if len(vowels) > 0:
                     consonants = self.__moveFirstLetterPhonemeForList(consonants, final_letters)
                 else:
-                    vowelNotUsedYet = self.__getFirstUnsedVowelInList(vowelsNotYetFound, final_letters)
+                    vowelNotUsedYet = self.__getFirstUnsedVowelInList(vowelsNotUsedYet, final_letters)
                     
                     if vowelNotUsedYet is not None:
-                        self.__moveFirstLetterPhonemeForListByIndex(consonants, final_letters, final_letters.index(vowelsNotYetFound[vowelNotUsedYet])+1)
-                        vowelsNotYetFound.remove(vowelsNotYetFound[vowelNotUsedYet])
+                        self.__moveFirstLetterPhonemeForListByIndex(consonants, final_letters, final_letters.index(vowelNotUsedYet) + 1)
+                        vowelsNotUsedYet.remove(vowelNotUsedYet)
                     else:
                         consonants = self.__moveFirstLetterPhonemeForList(consonants, final_letters)
 
@@ -109,26 +115,24 @@ class MantraAnagram:
             
             consonants_first = False
 
-        vowelsNotYetFound = ['a', 'e', 'i', 'o', 'u']
-        if len(ending_consonants) > 0:
-            while len(ending_consonants) > 0:
-                if final_letters[len(final_letters)-1] not in ['a', 'e', 'i', 'o', 'u'] and len([i for i in vowelsNotYetFound if i in final_letters]) > 0:
-                    v =  [i for i in vowelsNotYetFound if i in final_letters][0]
-                    index  = final_letters.index(v)
-                    final_letters.insert(index+1, ending_consonants[0])
-                    ending_consonants = self.__removeLetters([ending_consonants[0]], ending_consonants)  
-                    vowelsNotYetFound.remove(v) 
-                else:
-                    final_letters.append(ending_consonants[0])
-                    ending_consonants = self.__removeLetters([ending_consonants[0]], ending_consonants)     
+        vowelsNotUsedYet = ['a', 'e', 'i', 'o', 'u']
 
-        if len(vowels) > 0:
-            while len(vowels) > 0:
-                if len(final_letters) > 0 and final_letters[len(final_letters)-1] in ['a', 'e', 'i', 'o', 'u']:
-                    final_letters.insert(0, vowels[0])
-                    vowels = self.__removeLetters([vowels[0]], vowels)
-                else:
-                    vowels = self.__moveFirstLetterPhonemeForList(vowels, final_letters)
+        while len(ending_consonants) > 0:
+            
+            if not self.__lastElementOfListIsVowel(final_letters) and self.__valueOfListContainsInAnotherList(vowelsNotUsedYet, final_letters):
+                vowelNotUsedYet = self.__getFirstUnsedVowelInList(vowelsNotUsedYet, final_letters)
+
+                if vowelNotUsedYet is not None:
+                    self.__moveFirstLetterPhonemeForListByIndex(ending_consonants, final_letters, final_letters.index(vowelNotUsedYet) + 1)
+                    vowelsNotUsedYet.remove(vowelNotUsedYet) 
+            else:
+                ending_consonants = self.__moveFirstLetterPhonemeForList(ending_consonants, final_letters)
+
+        while len(vowels) > 0:
+            if len(final_letters) > 0 and self.__lastElementOfListIsVowel(final_letters):
+                self.__moveFirstLetterPhonemeForListByIndex(vowels, final_letters, 0)
+            else:
+                vowels = self.__moveFirstLetterPhonemeForList(vowels, final_letters)
 
         return ''.join(final_letters)
 
