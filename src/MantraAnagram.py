@@ -54,9 +54,25 @@ class MantraAnagram:
         return consonants, digraphs, ending_consonants, vowels
 
     def __moveFirstLetterPhonemeForList(self, phonemes, letters):
-        letters.append(phonemes[0])
-        phonemes = self.__removeLetters([phonemes[0]], phonemes)
+        if len(phonemes) > 0:
+            letters.append(phonemes[0])
+            phonemes = self.__removeLetters([phonemes[0]], phonemes)
         return phonemes
+
+    def __moveFirstLetterPhonemeForListByIndex(self, phonemes, letters, index):
+        if len(phonemes) > 0:
+            letters.insert(index, phonemes[0])
+            phonemes = self.__removeLetters([phonemes[0]], phonemes)
+
+        return phonemes
+
+
+    def __getFirstUnsedVowelInList(self, vowelsNotUsedYet, letters):
+        for vowel in range(0, len(vowelsNotUsedYet)):
+            if vowelsNotUsedYet[vowel] in letters and letters.index(vowelsNotUsedYet[vowel]) < len(letters):
+                return vowel
+        
+        return None
 
     def generate(self, phrase):
         phrase = TextUtils.RemoveSpecialCharacters(phrase)
@@ -72,30 +88,22 @@ class MantraAnagram:
         consonants_first = True
 
         while(len(digraphs) > 0 or len(consonants) > 0):
-            if len(digraphs) > 0 and not consonants_first:
+            if not consonants_first and len(digraphs) > 0:
                 digraphs = self.__moveFirstLetterPhonemeForList(digraphs, final_letters)
-
-                if len(vowels) > 0:
-                    vowels = self.__moveFirstLetterPhonemeForList(vowels, final_letters)
+                vowels = self.__moveFirstLetterPhonemeForList(vowels, final_letters)
 
             elif len(consonants) > 0:
                 if len(vowels) > 0:
                     consonants = self.__moveFirstLetterPhonemeForList(consonants, final_letters)
                 else:
-                    if len([i for i in vowelsNotYetFound if i in final_letters]) > 0:
-                        for v in range(0, len(vowelsNotYetFound)):
-                            if vowelsNotYetFound[v] in final_letters:
-                                if final_letters.index(vowelsNotYetFound[v]) < len(final_letters):
-                                    final_letters.insert(final_letters.index(vowelsNotYetFound[v])+1, consonants[0])
-                                    consonants = self.__removeLetters([consonants[0]], consonants)
-                                    vowelsNotYetFound.remove(vowelsNotYetFound[v])
-                                    break
-                                else:
-                                    consonants = self.__moveFirstLetterPhonemeForList(consonants, final_letters)
-                                    break
+                    vowelNotUsedYet = self.__getFirstUnsedVowelInList(vowelsNotYetFound, final_letters)
+                    
+                    if vowelNotUsedYet is not None:
+                        self.__moveFirstLetterPhonemeForListByIndex(consonants, final_letters, final_letters.index(vowelsNotYetFound[vowelNotUsedYet])+1)
+                        vowelsNotYetFound.remove(vowelsNotYetFound[vowelNotUsedYet])
                     else:
                         consonants = self.__moveFirstLetterPhonemeForList(consonants, final_letters)
-                    
+
                 if len(vowels) > 0:
                     vowels = self.__moveFirstLetterPhonemeForList(vowels, final_letters)
             
