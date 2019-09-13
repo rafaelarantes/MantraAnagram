@@ -7,7 +7,7 @@ from TextUtils import TextUtils
 
 
 class MantraAnagramTests(unittest.TestCase):
-
+    
     def testWordsEnglish(self):
         phrases = [
                     "I think this is good",
@@ -24,6 +24,7 @@ class MantraAnagramTests(unittest.TestCase):
             p = TextUtils.RemoveDuplicateCharacters(p)
 
             self.assertEqual(len(list(phrase)), len(list(p)))
+
     def testWordsPortuguese(self):
         phrases = [
                     "Eu acho que isso é bom",
@@ -40,7 +41,43 @@ class MantraAnagramTests(unittest.TestCase):
             p = TextUtils.RemoveDuplicateCharacters(p)
 
             self.assertEqual(len(list(phrase)), len(list(p)))
+    
+    def testSmallWords(self):
+        phrases = [
+                "hi",
+                "oi",
+                "hello",
+                "alô",
+                "olá",
+                "good"
+            ]
 
+        mantra = MantraAnagram()
+        for p in phrases:
+            phrase = mantra.generate(p)
+
+            p = TextUtils.RemoveSpecialCharacters(p)
+            p = TextUtils.RemoveDuplicateCharacters(p)
+
+            self.assertEqual(len(list(phrase)), len(list(p)))        
+
+    def testWordsWithSothingATypeOfCharacter(self):
+        phrases = [
+                "aa",
+                "bb",
+                "scsc",
+            ]
+
+        mantra = MantraAnagram()
+        for p in phrases:
+            phrase = mantra.generate(p)
+
+            p = TextUtils.RemoveSpecialCharacters(p)
+            p = TextUtils.RemoveDuplicateCharacters(p)
+
+            self.assertEqual(len(list(phrase)), len(list(p)))
+
+    
 
 if __name__ == '__main__':
     unittest.main()

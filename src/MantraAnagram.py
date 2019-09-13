@@ -72,7 +72,6 @@ class MantraAnagram:
                     vowels = self.__removeLetters([vowels[0]], vowels)
 
             elif len(consonants) > 0:
-                consonants_first = False
                 if len(vowels) > 0:
                     final_letters.append(consonants[0])
                     consonants = self.__removeLetters([consonants[0]], consonants)
@@ -97,6 +96,8 @@ class MantraAnagram:
                 if len(vowels) > 0:
                     final_letters.append(vowels[0])
                     vowels = self.__removeLetters([vowels[0]], vowels)
+            
+            consonants_first = False
 
         vowelsNotYetFound = ['a', 'e', 'i', 'o', 'u']
         if len(ending_consonants) > 0:
@@ -113,7 +114,7 @@ class MantraAnagram:
 
         if len(vowels) > 0:
             while len(vowels) > 0:
-                if final_letters[len(final_letters)-1] in ['a', 'e', 'i', 'o', 'u']:
+                if len(final_letters) > 0 and final_letters[len(final_letters)-1] in ['a', 'e', 'i', 'o', 'u']:
                     final_letters.insert(0, vowels[0])
                     vowels = self.__removeLetters([vowels[0]], vowels)
                 else:
