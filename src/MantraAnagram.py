@@ -1,6 +1,6 @@
 from random import shuffle
-from TextUtils import TextUtils
-from Phonemes import Phonemes
+from .TextUtils import TextUtils
+from .Phonemes import Phonemes
 
 class MantraAnagram:
     def generate(self, phrase):

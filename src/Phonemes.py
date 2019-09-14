@@ -1,4 +1,7 @@
-from LetterUtils import LetterUtils
+from .LetterUtils import LetterUtils
+from random import shuffle
+from .Phonemes import Consonant
+from .Phonemes import Digraph
 
 class Phonemes:
     def __getVowels(self, letters):
@@ -103,7 +106,18 @@ class Phonemes:
             consonants = self.__moveFirstLetterPhonemeForList(consonants, letters)
         
         return consonants
-    
+        
+    def addDCV(self, digraphs, consonants, vowels, letters):
+        types_of_phonemes = [Consonant, Digraph]
+        
+        while(len(digraphs) > 0 or len(consonants) > 0 or len(vowels) > 0):
+            shuffle(types_of_phonemes)
+            for phoneme in types_of_phonemes:
+                phoneme(letters).
+                pass
+            
+        pass
+
     def addDigraphConsonantVowel(self, digraphs, consonants, vowels, letters):
         vowelsNotUsedYet = ['a', 'e', 'i', 'o', 'u']
         consonants_first = True

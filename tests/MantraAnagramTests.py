@@ -2,8 +2,8 @@ import unittest
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-from MantraAnagram import MantraAnagram
-from TextUtils import TextUtils
+from ..src.MantraAnagram import MantraAnagram
+from ..src.TextUtils import TextUtils
 
 
 class MantraAnagramTests(unittest.TestCase):
