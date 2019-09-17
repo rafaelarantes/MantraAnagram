@@ -6,6 +6,11 @@ class AbstractPhoneme(ABC):
     def __init__(self, letters, next_phoneme = None):
         self.value = self.__getFirstRandomFromList(letters)
         self.next_phoneme = next_phoneme
+        self.setProperties(letters) 
+
+    @abstractmethod
+    def setProperties(self, letters):
+        pass
 
     @abstractmethod
     def addToList(self, phonemes):

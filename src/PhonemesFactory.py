@@ -3,6 +3,7 @@ from random import shuffle
 from Phonemes.Consonant import Consonant
 from Phonemes.Digraph import Digraph
 from Phonemes.Vowel import Vowel
+from Phonemes.Suffix import Suffix
 
 class PhonemesFactory:
   
@@ -56,7 +57,7 @@ class PhonemesFactory:
 
 
     def addPhonemes(self, diagram_letters, letters):
-        phonemes_names = [Consonant.__name__, Digraph.__name__]
+        phonemes_names = [Consonant.__name__, Digraph.__name__, Suffix.__name__, Vowel.__name__]
         
         while len(letters) > 0:
             shuffle(phonemes_names)

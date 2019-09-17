@@ -1,9 +1,13 @@
 from Phonemes.AbstractPhoneme import AbstractPhoneme
 
 class Digraph(AbstractPhoneme):
+    
+    def setProperties(self, letters):
+        pass
 
     def addToList(self, phonemes):
-        phonemes.append(self.value)
+        if self.value != '':
+            phonemes.append(self.value)
 
         if self.next_phoneme is not None:
             self.next_phoneme.addToList(phonemes)
