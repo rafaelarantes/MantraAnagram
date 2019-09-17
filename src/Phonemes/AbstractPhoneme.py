@@ -3,25 +3,27 @@ from random import shuffle
 
 class AbstractPhoneme(ABC):
 
-    def __init__(self, value, next_phoneme = None):
-        self.value = value
+    def __init__(self, letters, next_phoneme = None):
+        self.value = self.__getFirstRandomFromList(letters)
         self.next_phoneme = next_phoneme
 
     @abstractmethod
     def addToList(self, phonemes):
         pass
 
-    def getFirstRandomFromList(self, phonemes):
-        if len(phonemes) > 0:
-            shuffle(phonemes)
+    def __getFirstRandomFromList(self, letters):
+        if len(letters) > 0:
+            shuffle(letters)
         
-        phonemes_from_list = __getFromList(phonemes)
+        phonemes_from_list = self.getFromList(letters)
         if len(phonemes_from_list) > 0:
-            phonemes.remove(phonemes.index(phonemes_from_list[0]))
+            for l in list(phonemes_from_list[0]):
+                letters.remove(l)
+
             return phonemes_from_list[0]
 
         return ""
 
-    abstractmethod
-    def __getFromList(self, phonemes):
+    @abstractmethod
+    def getFromList(self, phonemes):
         pass

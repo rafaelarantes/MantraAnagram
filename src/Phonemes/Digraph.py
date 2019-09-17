@@ -1,3 +1,4 @@
+from Phonemes.AbstractPhoneme import AbstractPhoneme
 
 class Digraph(AbstractPhoneme):
 
@@ -5,9 +6,9 @@ class Digraph(AbstractPhoneme):
         phonemes.append(self.value)
 
         if self.next_phoneme is not None:
-            self.next_phoneme(phonemes)
+            self.next_phoneme.addToList(phonemes)
 
-    def __getFromList(self, phonemes):
+    def getFromList(self, phonemes):
         digraphs = []
 
         for digraph in ['ch', 'lh', 'nh', 'gu', 'qu', 'sc', 'sç', 'xc', 'xs',
@@ -17,7 +18,7 @@ class Digraph(AbstractPhoneme):
             lettersDigraph = list(digraph)
             
             if lettersDigraph[0] in phonemes and lettersDigraph[1] in phonemes and len(list(filter(lambda x : lettersDigraph[0] in list(x) or lettersDigraph[1] in list(x), digraphs))) == 0:
-                digraphs.append[digraph]
+                digraphs.append(digraph)
 
         return digraphs
         

@@ -1,6 +1,6 @@
 from random import shuffle
-from .TextUtils import TextUtils
-from .Phonemes import Phonemes
+from TextUtils import TextUtils
+from PhonemesFactory import PhonemesFactory
 
 class MantraAnagram:
     def generate(self, phrase):
@@ -10,12 +10,12 @@ class MantraAnagram:
         letters = list(phrase)
         shuffle(letters)
         final_letters = []
-        phonemes = Phonemes()
+        phonemes = PhonemesFactory()
 
-        consonants, digraphs, ending_consonants, vowels = phonemes.getPhonemes(letters)
-        digraphs, consonants, vowels = phonemes.addDigraphConsonantVowel(digraphs, consonants, vowels, final_letters)
-        phonemes.addEndConsonants(ending_consonants, final_letters)
-        phonemes.addRemainingVowels(vowels, final_letters)
+        phonemes.addPhonemes(final_letters, letters)
+        
+        #phonemes.addEndConsonants(ending_consonants, final_letters)
+        #phonemes.addRemainingVowels(vowels, final_letters)
         
         return ''.join(final_letters)
 

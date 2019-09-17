@@ -1,33 +1,12 @@
-from .LetterUtils import LetterUtils
+#from .LetterUtils import LetterUtils
 from random import shuffle
-from .Phonemes import Consonant
-from .Phonemes import Digraph
+from Phonemes.Consonant import Consonant
+from Phonemes.Digraph import Digraph
+from Phonemes.Vowel import Vowel
 
-class Phonemes:
-    def __getVowels(self, letters):
-        return list(filter(lambda x : x in ['a', 'e', 'i', 'o', 'u'], letters))
-
-    def __getConsonants(self, letters):
-        return list(filter(lambda x : x not in ['a', 'e', 'i', 'o', 'u', 'r', 's'], letters))
-
-
-    def __getEndingConsonants(self, letters):
-        return list(filter(lambda x : x in ['r', 's'], letters))
-
-    def __getDigraphs(self, letters):
-        digraphs = []
-        for digraph in ['ch', 'lh', 'nh', 'gu', 'qu', 'sc', 'sç', 'xc', 'xs',
-                        'gh', 'th', 'sh', 'zh', 'rh', 'ph', 'wh', 'wr', 'ck',
-                        'kn', 'dg', 'pn', 'ps', 'ng',
-                       ]:
-            lettersDigraph = list(digraph)
-            
-            if lettersDigraph[0] in letters and lettersDigraph[1] in letters and len(list(filter(lambda x : lettersDigraph[0] in list(x) or lettersDigraph[1] in list(x), digraphs))) == 0:
-                digraphs.append(digraph)
-                
-        return digraphs
-    
-    def __moveFirstLetterPhonemeForList(self, phonemes, letters):
+class PhonemesFactory:
+  
+    b =  """def __moveFirstLetterPhonemeForList(self, phonemes, letters):
         if len(phonemes) > 0:
             letters.append(phonemes[0])
             phonemes = LetterUtils.removeLetters([phonemes[0]], phonemes)
@@ -39,7 +18,7 @@ class Phonemes:
             phonemes = LetterUtils.removeLetters([phonemes[0]], phonemes)
 
         return phonemes
-
+        
 
     def __valueOfListContainsInAnotherList(self, first_list, second_list):
         return len([i for i in first_list if i in second_list]) > 0
@@ -54,21 +33,7 @@ class Phonemes:
     def __lastElementOfListIsVowel(self, letters):
         return letters[len(letters)-1] in ['a', 'e', 'i', 'o', 'u']
 
-    def getPhonemes(self, letters):
-        digraphs = self.__getDigraphs(letters)
-        LetterUtils.removeLetters(digraphs, letters)
-        
-        ending_consonants = self.__getEndingConsonants(letters)
-        letters = LetterUtils.removeLetters(ending_consonants, letters)
-        
-        consonants = self.__getConsonants(letters)
-        letters = LetterUtils.removeLetters(consonants, letters)
-        
-        vowels = self.__getVowels(letters)
-        letters = LetterUtils.removeLetters(vowels, letters)
 
-        return consonants, digraphs, ending_consonants, vowels
-    
     def addEndConsonants(self, ending_consonants, letters):
         vowelsNotUsedYet = ['a', 'e', 'i', 'o', 'u']
 
@@ -87,38 +52,29 @@ class Phonemes:
             if len(letters) > 0 and self.__lastElementOfListIsVowel(letters):
                 self.__moveFirstLetterPhonemeForListByIndex(vowels, letters, 0)
             else:
-                self.__moveFirstLetterPhonemeForList(vowels, letters)
-    
-    def addDigraph(self, digraphs, letters):
-        if len(digraphs) > 0:
-            digraphs = self.__moveFirstLetterPhonemeForList(digraphs, letters)
-        
-        return digraphs
-    
-    def addVowel(self, vowels, letters):
-        if len(vowels) > 0:
-            vowels = self.__moveFirstLetterPhonemeForList(vowels, letters)
-        
-        return vowels
+                self.__moveFirstLetterPhonemeForList(vowels, letters)"""
 
-    def addConsonant(self, consonants, letters):
-        if len(consonants) > 0:
-            consonants = self.__moveFirstLetterPhonemeForList(consonants, letters)
-        
-        return consonants
-        
-    def addDCV(self, digraphs, consonants, vowels, letters):
-        types_of_phonemes = [Consonant, Digraph]
-        
-        while(len(digraphs) > 0 or len(consonants) > 0 or len(vowels) > 0):
-            shuffle(types_of_phonemes)
-            for phoneme in types_of_phonemes:
-                phoneme(letters).
-                pass
-            
-        pass
 
-    def addDigraphConsonantVowel(self, digraphs, consonants, vowels, letters):
+    def addPhonemes(self, diagram_letters, letters):
+        phonemes_names = [Consonant.__name__, Digraph.__name__]
+        
+        while len(letters) > 0:
+            shuffle(phonemes_names)
+            for phoneme_name in phonemes_names:
+                self.__addPhonemeToList(phoneme_name, diagram_letters, letters, Vowel.__name__)
+
+
+    def __addPhonemeToList(self, phoneme_name, phonemes, letters, next_phoneme_name = None):
+        next_phoneme = None
+        phoneme_class = globals()[phoneme_name]
+
+        if next_phoneme_name is not None:
+            next_phoneme = globals()[next_phoneme_name]
+
+        phoneme = phoneme_class(letters, next_phoneme(letters))
+        phoneme.addToList(phonemes)
+
+    e = """def addDigraphConsonantVowel(self, digraphs, consonants, vowels, letters):
         vowelsNotUsedYet = ['a', 'e', 'i', 'o', 'u']
         consonants_first = True
 
@@ -145,3 +101,4 @@ class Phonemes:
             consonants_first = False
         
         return digraphs, consonants, vowels
+    """
