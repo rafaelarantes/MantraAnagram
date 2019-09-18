@@ -10,10 +10,10 @@ class MantraAnagramTests(unittest.TestCase):
     
     def testWordsEnglish(self):
         phrases = [
-                    "I think this is good",
-                    "I would like to go to Egypt",
-                    "Peace is the solution for the world",
-                    "We can't teleport yet"
+                    'I think this is good',
+                    'I would like to go to Egypt',
+                    'Peace is the solution for the world',
+                    'We can\'t teleport yet'
                   ]
 
         mantra = MantraAnagram()
@@ -27,10 +27,10 @@ class MantraAnagramTests(unittest.TestCase):
 
     def testWordsPortuguese(self):
         phrases = [
-                    "Eu acho que isso é bom",
-                    "Eu gostaria de ir ao egito",
-                    "A paz é a solução para o mundo",
-                    "Ainda não podemos nos teletransportar"
+                    'Eu acho que isso é bom',
+                    'Eu gostaria de ir ao egito',
+                    'A paz é a solução para o mundo',
+                    'Ainda não podemos nos teletransportar'
                   ]
 
         mantra = MantraAnagram()
@@ -44,12 +44,12 @@ class MantraAnagramTests(unittest.TestCase):
     
     def testSmallWords(self):
         phrases = [
-                "hi",
-                "oi",
-                "hello",
-                "alô",
-                "olá",
-                "good"
+                'hi',
+                'oi',
+                'hello',
+                'alô',
+                'olá',
+                'good'
             ]
 
         mantra = MantraAnagram()
@@ -63,9 +63,9 @@ class MantraAnagramTests(unittest.TestCase):
 
     def testWordsWithSothingATypeOfCharacter(self):
         phrases = [
-                "aa",
-                "bb",
-                "scsc",
+                'aa',
+                'bb',
+                'scsc',
             ]
 
         mantra = MantraAnagram()

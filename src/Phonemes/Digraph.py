@@ -7,13 +7,13 @@ digraphs = ['ch', 'lh', 'nh', 'gu', 'qu', 'sc', 'sç', 'xc', 'xs',
 
 class Digraph(AbstractPhoneme):
     
-    def setProperties(self, letters):
+    def _setProperties(self, letters):
         pass
 
-    def add(self, phonemes):
+    def _add(self, phonemes):
         phonemes.append(self.value)
         
-    def getFromList(self, phonemes):
+    def _getFromList(self, phonemes):
         digraph_result = []
 
         for digraph in digraphs:

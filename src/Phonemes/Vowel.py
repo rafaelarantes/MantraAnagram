@@ -3,16 +3,16 @@ from Phonemes.AbstractPhoneme import AbstractPhoneme
 vowels = ['a', 'e', 'i', 'o', 'u']
 class Vowel(AbstractPhoneme):
     
-    def setProperties(self, letters):
+    def _setProperties(self, letters):
         self.next_phoneme = None
 
-    def add(self, phonemes):
+    def _add(self, phonemes):
         if self.__lastElementOfListIsVowel(phonemes) and len(list(filter(lambda x : x not in vowels, phonemes))) == 0:
             phonemes.insert(0, self.value)
         else:
             phonemes.append(self.value)
 
-    def getFromList(self, phonemes):
+    def _getFromList(self, phonemes):
         return list(filter(lambda x : x in vowels, phonemes))
 
     def __lastElementOfListIsVowel(self, letters):
