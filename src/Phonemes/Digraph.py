@@ -5,13 +5,9 @@ class Digraph(AbstractPhoneme):
     def setProperties(self, letters):
         pass
 
-    def addToList(self, phonemes):
-        if self.value != '':
-            phonemes.append(self.value)
-
-        if self.next_phoneme is not None:
-            self.next_phoneme.addToList(phonemes)
-
+    def add(self, phonemes):
+        phonemes.append(self.value)
+        
     def getFromList(self, phonemes):
         digraphs = []
 

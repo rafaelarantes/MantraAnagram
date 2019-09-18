@@ -72,7 +72,7 @@ class PhonemesFactory:
         if next_phoneme_name is not None:
             next_phoneme = globals()[next_phoneme_name]
 
-        phoneme = phoneme_class(letters, next_phoneme(letters))
+        phoneme = phoneme_class(letters, next_phoneme)
         phoneme.addToList(phonemes)
 
     e = """def addDigraphConsonantVowel(self, digraphs, consonants, vowels, letters):

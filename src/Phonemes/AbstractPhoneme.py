@@ -4,16 +4,26 @@ from random import shuffle
 class AbstractPhoneme(ABC):
 
     def __init__(self, letters, next_phoneme = None):
-        self.value = self.__getFirstRandomFromList(letters)
         self.next_phoneme = next_phoneme
         self.setProperties(letters) 
+        self.value = self.__getFirstRandomFromList(letters)
+        
+        if self.next_phoneme is not None:
+            self.next_phoneme = self.next_phoneme(letters)
 
     @abstractmethod
     def setProperties(self, letters):
         pass
 
-    @abstractmethod
     def addToList(self, phonemes):
+        if self.value != '':
+            self.add(phonemes)
+
+        if self.next_phoneme is not None:
+            self.next_phoneme.add(phonemes)
+    
+    @abstractmethod
+    def add(self, phonemes):
         pass
 
     def __getFirstRandomFromList(self, letters):

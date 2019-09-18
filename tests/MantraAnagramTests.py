@@ -24,7 +24,7 @@ class MantraAnagramTests(unittest.TestCase):
             p = TextUtils.RemoveDuplicateCharacters(p)
 
             self.assertEqual(len(list(phrase)), len(list(p)))
-"""
+
     def testWordsPortuguese(self):
         phrases = [
                     "Eu acho que isso é bom",
@@ -76,7 +76,7 @@ class MantraAnagramTests(unittest.TestCase):
             p = TextUtils.RemoveDuplicateCharacters(p)
 
             self.assertEqual(len(list(phrase)), len(list(p)))
- """   
+    
 
 if __name__ == '__main__':
     unittest.main()

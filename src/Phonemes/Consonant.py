@@ -21,15 +21,12 @@ class Consonant(AbstractPhoneme):
 
         
 
-    def addToList(self, phonemes):
-        if self.value != '':
-            if self.exists_vowel_yet:
-                phonemes.append(self.value)
-            else:
-                phonemes.insert(self.index_vowel_never_used, self.value)
+    def add(self, phonemes):
+        if self.exists_vowel_yet:
+            phonemes.append(self.value)
+        else:
+            phonemes.insert(self.index_vowel_never_used, self.value)
 
-        if self.next_phoneme is not None:
-            self.next_phoneme.addToList(phonemes)
     
     def getFromList(self, phonemes):
         return list(filter(lambda x : x not in vowels + suffix, phonemes))
