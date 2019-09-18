@@ -13,10 +13,6 @@ class MantraAnagram:
         phonemes = PhonemesFactory()
 
         phonemes.addPhonemes(final_letters, letters)
-        
-        #phonemes.addEndConsonants(ending_consonants, final_letters)
-        #phonemes.addRemainingVowels(vowels, final_letters)
-        
         return ''.join(final_letters)
 
 
