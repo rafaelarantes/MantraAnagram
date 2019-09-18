@@ -29,5 +29,13 @@ class VowelTests(unittest.TestCase):
 
         self.assertEqual(True, len(final_letters) == 0)
 
+    def testAddVowelInFirstPositionWhenLastElementIsVowel(self):
+        final_letters = ["c", "o", "r", "e"]
+        letters = ["i"]
+        vowel = Vowel(letters)
+        vowel.addToList(final_letters)
+
+        self.assertEqual(''.join(["i", "c", "o", "r", "e"]), ''.join(final_letters))       
+
 if __name__ == '__main__':
     unittest.main()

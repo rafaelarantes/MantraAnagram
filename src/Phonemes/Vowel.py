@@ -7,7 +7,7 @@ class Vowel(AbstractPhoneme):
         self.next_phoneme = None
 
     def _add(self, phonemes):
-        if self.__lastElementOfListIsVowel(phonemes) and len(list(filter(lambda x : x not in vowels, phonemes))) == 0:
+        if self.__lastElementOfListIsVowel(phonemes):
             phonemes.insert(0, self.value)
         else:
             phonemes.append(self.value)
