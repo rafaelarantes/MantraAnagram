@@ -45,6 +45,7 @@ class ConsonantTests(unittest.TestCase):
 
         self.assertEqual(''.join(['l', 'i', 'g', 'h', 't', 's', 'h', 'o', 'f' 't']), ''.join(final_letters))
  
+ 
 
     def testAddInLastPositionWhenNoHasMoreVowelAndNoHasMoreVowelNerverUsed(self):
         letters = ['g']

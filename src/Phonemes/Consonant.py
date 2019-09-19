@@ -16,14 +16,19 @@ class Consonant(AbstractPhoneme):
             diagram_letters.insert(self.__getVowelIndexNeverUsed(diagram_letters), self.value)
 
     def __getVowelIndexNeverUsed(self, diagram_letters):
-        vowels_in_letters = [i for i in diagram_letters if i in Vowel.getVowels()]
-        for v in vowels_in_letters:
-            i = diagram_letters.index(v)
-            if (len([i for i in diagram_letters[i+1 : i+2] if i in Vowel.getVowels()]) > 0) or diagram_letters[i+2 : i+3] == [] or len([i for i in diagram_letters[i+2 : i+3] if i in Vowel.getVowels()]) > 0:
-                return i+1
+        vowels_in_diagram_letters = [i for i in diagram_letters if i in Vowel.getVowels()]
+        for vowel in vowels_in_diagram_letters:
+            vowel_index = diagram_letters.index(vowel)
+            if self.__valueOfIndexAfterVowelIsVowel(diagram_letters, vowel_index, 1) or self.__valueOfIndexAfterVowelIsVowel(diagram_letters, vowel_index, 2):
+                return vowel_index+1
 
         return len(diagram_letters)
+    
+    def __valueOfIndexAfterVowelIsVowel(self, diagram_letters, vowel_index, next_index):
+        if diagram_letters[vowel_index+next_index : vowel_index+next_index+1] == []:
+            return True
 
+        return len([i for i in diagram_letters[vowel_index+next_index : vowel_index+next_index+1] if i in Vowel.getVowels()]) > 0
     
     def _getFromList(self, phrase_letters):
         return list(filter(lambda x : x in consonants, phrase_letters))
