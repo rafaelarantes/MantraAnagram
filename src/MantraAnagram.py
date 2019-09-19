@@ -4,16 +4,17 @@ from PhonemesFactory import PhonemesFactory
 
 class MantraAnagram:
     def generate(self, phrase):
+        
         phrase = TextUtils.RemoveSpecialCharacters(phrase)
         phrase = TextUtils.RemoveDuplicateCharacters(phrase)
 
-        letters = list(phrase)
-        shuffle(letters)
-        final_letters = []
-        phonemes = PhonemesFactory()
+        phrase_letters = list(phrase)
+        shuffle(phrase_letters)
+        diagram_letters = []
+        phonemesFactory = PhonemesFactory()
 
-        phonemes.addPhonemes(final_letters, letters)
-        return ''.join(final_letters)
+        phonemesFactory.addPhonemes(diagram_letters, phrase_letters)
+        return ''.join(diagram_letters)
 
 
 
