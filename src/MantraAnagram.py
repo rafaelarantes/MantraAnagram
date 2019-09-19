@@ -4,7 +4,6 @@ from PhonemesFactory import PhonemesFactory
 
 class MantraAnagram:
     def generate(self, phrase):
-        
         phrase = TextUtils.RemoveSpecialCharacters(phrase)
         phrase = TextUtils.RemoveDuplicateCharacters(phrase)
 

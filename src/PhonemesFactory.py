@@ -8,7 +8,6 @@ phonemes_names = [Consonant.__name__, Digraph.__name__, Suffix.__name__, Vowel._
 class PhonemesFactory:
 
     def addPhonemes(self, diagram_letters, phrase_letters):
-
         while len(phrase_letters) > 0:
             shuffle(phonemes_names)
             for phoneme_name in phonemes_names:
@@ -16,7 +15,6 @@ class PhonemesFactory:
 
 
     def __addPhonemeToList(self, phoneme_name, diagram_letters, phrase_letters, next_phoneme_name = None):
-
         next_phoneme = None
         phoneme_class = globals()[phoneme_name]
 
