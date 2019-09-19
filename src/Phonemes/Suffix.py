@@ -10,10 +10,14 @@ class Suffix(AbstractPhoneme):
         phonemes.append(self.value)
 
     def _getFromList(self, phonemes):
-        if len(list(filter(lambda x : x not in suffixes, phonemes))) == 0:
+        if self.__hasAnotherTypeOfPhonemeInListThatIsNotSuffix(phonemes):
             return list(filter(lambda x : x in suffixes, phonemes))
 
         return []
+
+    def __hasAnotherTypeOfPhonemeInListThatIsNotSuffix(self, letters):
+        return len(list(filter(lambda x : x not in suffixes, letters))) == 0
+
 
     @staticmethod
     def getSuffixes():

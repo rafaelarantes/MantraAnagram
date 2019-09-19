@@ -19,10 +19,14 @@ class Digraph(AbstractPhoneme):
         for digraph in digraphs:
             lettersDigraph = list(digraph)
             
-            if lettersDigraph[0] in phonemes and lettersDigraph[1] in phonemes and len(list(filter(lambda x : lettersDigraph[0] in list(x) or lettersDigraph[1] in list(x), digraph_result))) == 0:
+            if lettersDigraph[0] in phonemes and lettersDigraph[1] in phonemes and self.__notExistsLettersInList(lettersDigraph[0], lettersDigraph[1], digraph_result):
                 digraph_result.append(digraph)
 
         return digraph_result
+
+    def __notExistsLettersInList(self, first_letter, second_letter, digraph_list):
+        return len(list(filter(lambda x : first_letter in list(x) or second_letter in list(x), digraph_list))) == 0
+
         
     @staticmethod
     def getDigraphs():
